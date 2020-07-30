@@ -40,7 +40,7 @@ class Data_Process:
         r=self.good_one.copy()
         r['faulty'] = 0
         self.good_one.reset_index(inplace=True, drop=True)
-        #self.good_one.fillna(0, inplace=True)
+
 
         self.f_n['faulty']=1
 
