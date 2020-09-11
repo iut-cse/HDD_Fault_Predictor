@@ -38,11 +38,15 @@ class Data_Process:
 #Extract duplicates values
         self.good_one = self.temp.drop_duplicates(keep=False)
         r=self.good_one.copy()
+
         r['faulty'] = 0
         self.good_one.reset_index(inplace=True, drop=True)
 
 
         self.f_n['faulty']=1
+        count_row = self.f_n.shape[0]
+        print(count_row)
+        r = r.iloc[ 0:count_row , :]
 
         self.data=pd.concat([r, self.f_n])
         self.data = self.data.sample(frac=1).reset_index(drop=True)
