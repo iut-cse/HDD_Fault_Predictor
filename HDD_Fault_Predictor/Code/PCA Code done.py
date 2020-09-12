@@ -20,6 +20,7 @@ def PCA(data):
 
     df = pd.read_csv(data, delimiter=",", encoding="latin1")
 
+
     del df['serial_number']
     del df['Unnamed: 0']
     del df['dt']
@@ -94,10 +95,10 @@ def PCA(data):
 
 
     matrix = np.cov(transpose_data)
-    print(matrix)
+
 
     eigen_val, eigen_vec = np.linalg.eig(matrix)
-    print((eigen_vec))
+
 
     diction = {}
     for key, value in zip(eigen_val, eigen_vec):
@@ -135,6 +136,8 @@ def PCA(data):
 
 
     pc_d['class'] = y
+
+    print(pc_d)
 
 
 

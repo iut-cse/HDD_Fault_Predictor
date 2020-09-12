@@ -10,7 +10,7 @@ def plot_for_variance(eig_values, idx):
     plt.xlabel("Number of components")
     plt.ylabel("Cumulative explained variance")
     plt.xticks(xint)
-    plt.xlim(1, 4, 1)
+    plt.xlim(1, 7, 1)
     plt.show()
 
 
