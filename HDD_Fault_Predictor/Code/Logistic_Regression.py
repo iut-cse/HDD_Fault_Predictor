@@ -11,16 +11,7 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 
-my_data = pd.read_csv("../Data/PCA_Features.csv", delimiter=",")
-my_data
 
-X=my_data.iloc[:,1:5]
-print(X)
-
-Y=my_data.iloc[:,-1:]
-print(Y)
-
-X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2)
 
 def _sigmoid(x):
   return 1 / (1 + np.exp(-x))
@@ -55,9 +46,8 @@ def fit(X,y):
     w[3]=w4
   return w, bias
 
-weights,bias=fit(X_train.values,y_train.values)
-print(weights)
-print(bias)
+
+
 
 def predict(X,weights,bias):
   linear_model = np.dot(X, weights) + bias
@@ -65,18 +55,36 @@ def predict(X,weights,bias):
   y_predicted_cls = [1 if i > 0.5 else 0 for i in y_predicted]
   return np.array(y_predicted_cls)
 
-y_pred=predict(X_test.values,weights,bias)
 
 
-c=0
-for i in range(len(y_pred)):
-  if(y_pred[i]==y_test.values[i]):
-    c=c+1
-print(c)
+
+
 
 def accuracy(y_true, y_pred,c):
   accuracy=c/len(y_true)
   return accuracy
 
-print(accuracy(y_test.values,y_pred,c))
+def accuracy_result():
+
+  my_data = pd.read_csv("../Data/PCA_Features.csv", delimiter=",")
+
+  X = my_data.iloc[:, 1:5]
+
+  Y = my_data.iloc[:, -1:]
+
+  X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2)
+
+  weights, bias = fit(X_train.values, y_train.values)
+  y_pred = predict(X_test.values, weights, bias)
+
+  c = 0
+  for i in range(len(y_pred)):
+    if (y_pred[i] == y_test.values[i]):
+      c = c + 1
+
+
+
+  print(accuracy(y_test.values, y_pred, 123))
+
+
 

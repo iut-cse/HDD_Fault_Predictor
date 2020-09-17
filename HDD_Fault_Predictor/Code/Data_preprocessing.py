@@ -1,5 +1,5 @@
 import pandas as pd
-import hdd_fault_predictor as r
+
 import numpy as np
 
 class Data_Process:
@@ -22,7 +22,7 @@ class Data_Process:
          # extract faulty datarows from train data using faultTag data
         self.merged_inner = pd.merge(left=self.df, right=self.fault_tag)
         #the faulty one....
-         # tag faulty as 1 if fault_time - (minus) sample time<=n (n=10 so 10 din er kome jegulo fault hobe segulo 1 ,bakigulo 0)
+
         self.merged_inner['faulty']=np.where(self.merged_inner['fault_time'].str.replace(r'\D+', '').astype(int)-self.merged_inner['dt']<= n,1,0)
         #extract faulty sample
         self.fault=self.merged_inner[self.merged_inner['faulty']==1]
@@ -38,14 +38,14 @@ class Data_Process:
 #Extract duplicates values
         self.good_one = self.temp.drop_duplicates(keep=False)
         r=self.good_one.copy()
-
+        #labeled the good disk dataset
         r['faulty'] = 0
         self.good_one.reset_index(inplace=True, drop=True)
 
-
+         # labeled the faulty disk dataset
         self.f_n['faulty']=1
         count_row = self.f_n.shape[0]
-        print(count_row)
+
         r = r.iloc[ 0:count_row , :]
 
         self.data=pd.concat([r, self.f_n])
@@ -68,11 +68,5 @@ class Data_Process:
 
 
 
-d=Data_Process('../Data/disk_sample_smart_log_201707.csv')
-p=r.Process_Fault_time()
-p.data_processing_fault_time('2017-10-20')
-
-d.update_failure_tag('../Data/fault_time.csv')
-d.tag(30)
 
 

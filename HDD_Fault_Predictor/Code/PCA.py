@@ -137,14 +137,12 @@ def PCA(data):
 
     pc_d['class'] = y
 
-    print(pc_d)
 
 
 
     x_f = pc_d.iloc[:, 0:4]
     y_c = pc_d.iloc[:, -1]
-    print("Manually: ")
-    print("Accuracy with PCA: ", clf.classify(x_f, y_c))
+
 
     return pc_d.to_csv('../Data/PCA_Features.csv')
 
@@ -159,6 +157,3 @@ def PCA(data):
 
 
 
-strr = '../Data/Final.csv'
-
-PCA(strr)

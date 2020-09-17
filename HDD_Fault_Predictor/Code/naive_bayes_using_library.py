@@ -17,35 +17,36 @@ from sklearn.model_selection import KFold
 from sklearn.naive_bayes import MultinomialNB
 from sklearn import preprocessing
 from sklearn.model_selection import cross_val_score
-
-dataset = pd.read_csv('PCA_Features.csv')
-dataset.head(100)
-print (dataset.dtypes)
-
-X = dataset.iloc[:,0:-1]
-y = dataset.iloc[:,-1]
-print(X.shape, y.shape)
-
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import GaussianNB
+def run():
+    dataset = pd.read_csv('../Data/PCA_Features.csv')
+    dataset.head(100)
+    del dataset['Unnamed: 0']
+
+
+    X = dataset.iloc[:,0:-1]
+    y = dataset.iloc[:,-1]
+
+
+
 #X, y = load_iris(return_X_y=True)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 #print(X_train.shape)
 #print(Y_train.shape)
 #print(Y_test.shape)
 
-gnb = GaussianNB()
-kf=KFold(n_splits=10)
-y_pred = gnb.fit(X_train, y_train).predict(X_test)
-print("Number of mislabeled points out of a total %d points : %d" % (X_test.shape[0], (y_test != y_pred).sum()))
+    gnb = GaussianNB()
+    kf=KFold(n_splits=10)
+    y_pred = gnb.fit(X_train, y_train).predict(X_test)
 
 
-accuracy_model=cross_val_score(gnb,X_train,y_train,cv=kf)
-precision_model=cross_val_score(gnb,X_train,y_train,cv=kf, scoring='precision')
-recall_model=cross_val_score(gnb,X_train,y_train,cv=kf, scoring='recall')
-avgAccuracy=statistics.mean(accuracy_model)
-avgPrecision=statistics.mean(precision_model)
-avgRecall=statistics.mean(recall_model)
-print(avgAccuracy)
-print(avgPrecision)
-print(avgRecall)
+    accuracy_model=cross_val_score(gnb,X_train,y_train,cv=kf)
+    precision_model=cross_val_score(gnb,X_train,y_train,cv=kf, scoring='precision')
+    recall_model=cross_val_score(gnb,X_train,y_train,cv=kf, scoring='recall')
+    avgAccuracy=statistics.mean(accuracy_model)
+    avgPrecision=statistics.mean(precision_model)
+    avgRecall=statistics.mean(recall_model)
+    print("Accuracy:",avgAccuracy*100," %")
+    print("Precission: ",avgPrecision*100," %")
+    print("Recall:",avgRecall*100," %")
